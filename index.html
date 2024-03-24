@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Bill Split Results</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venmo Payment</title>
+    <style>
+        /* Optional: Add some basic styling */
+        #results, #payment-selection {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bill Split Results</h1>
     <div id="results"></div>
-    <script src="script.js"></script>
-</body>
+    <div id="payment-selection">
+        <label for="person-select">Select Person to Pay:</label>
+        <select id="person-select"></select>
+        <input type="number" id="amount" placeholder="Amount">
+        <button id="add-payment">Add Payment</button>
+        <ul id="payment-list"></ul>
+    </div>
+
+    <script src="script.js"></script> </body>
 </html>
