@@ -24,8 +24,9 @@ people.forEach(person => {
     checkbox.value = name;
     checkbox.dataset.amount = amount; // Store the amount
     const label = document.createElement('label');
-    label.textContent = `${name}: $${amount / 100}`;
+    label.textContent = `${name}\t: $${amount / 100}`;
 
+    listItem.classList.add('no-bullet'); 
     listItem.appendChild(checkbox);
     listItem.appendChild(label);
     peopleList.appendChild(listItem);
@@ -43,7 +44,7 @@ generateButton.addEventListener('click', () => {
         const venmoLink = generateVenmoLink(venmoUsername); // Get the link
 
         // Open the link in a new window or tab
-        window.open(venmoLink, '_blank');
+        window.open(venmoLink);
     } else {
         // Handle the case where there's no Venmo username in the URL
     }
@@ -76,10 +77,4 @@ function generateVenmoLink(venmoUsername) {
     console.log(venmoUrl)
     
     return venmoUrl
-//    // Display the Venmo link
-//    const button = document.createElement('a');
-//    button.href = venmoUrl;
-//    button.textContent = 'Pay with Venmo';
-//    button.target = '_blank';
-//    venmoLinkDiv.appendChild(button);
 }

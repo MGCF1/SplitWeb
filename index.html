@@ -9,12 +9,16 @@
         #results, #payment-selection {
             margin-bottom: 20px;
         }
+        
+        ul.peopleList li.no-bullet { /* Adjust the selector if needed */
+            list-style-type: none;
+        }
     </style>
 </head>
 <body>
     <div id="results"></div>
     <div id="payment-selection">
-        <h2>Select People to Pay</h2>
+        <h2>Select People to Pay For</h2>
         <ul id="people-list"></ul>
         <button id="generate-venmo-link">Generate Venmo Link</button>
     </div>
