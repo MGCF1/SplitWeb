@@ -1,28 +1,26 @@
 // Get and Decode Encoded Data
 const urlParams = new URLSearchParams(window.location.search);
-const encodedData = urlParams.get('data');
-const decodedData = decodeURIComponent(encodedData);
-
-// Parse into Results
-const params = decodedData.split('&');
-const results = {};
-params.forEach(param => {
-    const [key, value] = param.split('=');
-    results[key] = value;
-});
+const total = urlParams.get('Total');
+const subTotal = urlParams.get('SubTotal');
+const encodedPeople = urlParams.get('people');
+const people = JSON.parse(decodeURIComponent(encodedPeople));
 
 // Display Results
 const resultsDiv = document.getElementById('results');
-resultsDiv.innerHTML = `<p>Subtotal: $${results.s}</p>`;
-resultsDiv.innerHTML += `<p>Paid: $${results.p}</p>`;
 
-for (let i = 1; ; i++) {
-    const nameKey = `p${i}n`;
-    const amountKey = `p${i}a`;
+// Display total
+resultsDiv.innerHTML = `<p>Total: $${total}</p>`;
 
-    if (results[nameKey] && results[amountKey]) {
-        resultsDiv.innerHTML += `<p>${results[nameKey]} Owes: $${results[amountKey]}</p>`;
-    } else {
-        break;
-    }
+// Display optional subtotal
+if (subTotal) {
+    resultsDiv.innerHTML += `<p>SubTotal: $${subTotal}</p>`;
 }
+
+// Display people
+people.forEach(person => {
+    // Extract name and amount from the person object
+    const name = Object.keys(person)[0];
+    const amount = person[name];
+
+    resultsDiv.innerHTML += `<p>${name} Owes: $${amount / 100}</p>`; // Divide by 100 for display
+}); 
