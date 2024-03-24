@@ -10,35 +10,44 @@ const venmoUsername = urlParams.get('venmo');
 const resultsDiv = document.getElementById('results');
 resultsDiv.innerHTML = `<p>Total: $${total}</p>`;
 if (subTotal) { resultsDiv.innerHTML += `<p>SubTotal: $${subTotal}</p>`; }
-people.forEach(person => { const name = Object.keys(person)[0];  const amount = person[name]; resultsDiv.innerHTML += `<p>${name} Owes: $${amount / 100}</p>`; });
 
-// Payment Selection Logic
-const personSelect = document.getElementById('person-select');
-const amountInput = document.getElementById('amount');
-const addPaymentButton = document.getElementById('add-payment');
-const paymentList = document.getElementById('payment-list');
-people.forEach(person => { const name = Object.keys(person)[0];  const option = document.createElement('option'); option.value = name;  option.textContent = name; personSelect.appendChild(option);  });
-addPaymentButton.addEventListener('click', () => { const selectedPerson = personSelect.value; const amount = parseFloat(amountInput.value); if (selectedPerson && amount) { addPaymentToList(selectedPerson, amount); amountInput.value = ''; }});
-function addPaymentToList(person, amount) { const listItem = document.createElement('li'); listItem.textContent = `${person}: $${amount.toFixed(2)}`; paymentList.appendChild(listItem);}
+// Display People with Checkboxes
+const peopleList = document.getElementById('people-list');
+people.forEach(person => {
+    const name = Object.keys(person)[0];
+    const amount = person[name];
+
+    const listItem = document.createElement('li');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.name = 'people';
+    checkbox.value = name;
+    checkbox.dataset.amount = amount; // Store the amount
+    const label = document.createElement('label');
+    label.textContent = `${name}: $${amount / 100}`;
+
+    listItem.appendChild(checkbox);
+    listItem.appendChild(label);
+    peopleList.appendChild(listItem);
+});
 
 // Venmo Link Generation
+const venmoLinkDiv = document.getElementById('venmo-link');
 if (venmoUsername) {
-    const venmoUrl = generateVenmoLink(venmoUsername);
-    const button = document.createElement('a');
-    button.href = venmoUrl;
-    button.textContent = 'Pay with Venmo';
-    button.target = '_blank';
-    resultsDiv.appendChild(button);
+    document.getElementById('venmo-link').innerHTML = ''; // Reset
+    generateVenmoLink(venmoUsername);
 }
 
 function generateVenmoLink(venmoUsername) {
     const payments = [];
 
-    // Get payments from the list
-    paymentList.querySelectorAll('li').forEach(listItem => {
-        const [person, amountStr] = listItem.textContent.split(': $');
-        const amount = parseFloat(amountStr);
-        payments.push({ username: person, amount: amount });
+    // Get selected people
+    const selectedPeople = document.querySelectorAll('input[name="people"]:checked');
+    selectedPeople.forEach(personCheckbox => {
+        payments.push({
+          username: personCheckbox.value,
+          amount: personCheckbox.dataset.amount / 100 // Get amount from dataset
+        });
     });
 
     // Construct a basic Venmo URL (multiple payments may not be supported)
@@ -52,5 +61,10 @@ function generateVenmoLink(venmoUsername) {
         }
     });
 
-    return venmoUrl;
+    // Display the Venmo link
+    const button = document.createElement('a');
+    button.href = venmoUrl;
+    button.textContent = 'Pay with Venmo';
+    button.target = '_blank';
+    venmoLinkDiv.appendChild(button);
 }  
