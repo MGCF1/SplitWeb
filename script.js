@@ -32,11 +32,24 @@ people.forEach(person => {
 });
 
 // Venmo Link Generation
-const venmoLinkDiv = document.getElementById('venmo-link');
-if (venmoUsername) {
-    document.getElementById('venmo-link').innerHTML = ''; // Reset
-    generateVenmoLink(venmoUsername);
-}
+// Venmo Link Generation (Updated)
+//const venmoLinkDiv = document.getElementById('venmo-link');
+const generateButton = document.getElementById('generate-venmo-link');
+
+generateButton.addEventListener('click', () => {
+    const venmoUsername = urlParams.get('venmo');
+    if (venmoUsername) {
+//        venmoLinkDiv.innerHTML = '';
+        const venmoLink = generateVenmoLink(venmoUsername); // Get the link
+
+        // Open the link in a new window or tab
+        window.open(venmoLink, '_blank');
+    } else {
+        // Handle the case where there's no Venmo username in the URL
+    }
+});
+
+
 
 function generateVenmoLink(venmoUsername) {
     const payments = [];
@@ -51,20 +64,22 @@ function generateVenmoLink(venmoUsername) {
     });
 
     // Construct a basic Venmo URL (multiple payments may not be supported)
-    let venmoUrl = 'https://venmo.com/' + venmoUsername + '?txn=charge';
-    payments.forEach((payment, index) => {
-        if (index === 0) {
-            venmoUrl += '&amount=' + payment.amount;
-        } else {
-            // May alert the user that multiple payments might not work
-            alert("Venmo may not support paying multiple people at once");
-        }
-    });
-
-    // Display the Venmo link
-    const button = document.createElement('a');
-    button.href = venmoUrl;
-    button.textContent = 'Pay with Venmo';
-    button.target = '_blank';
-    venmoLinkDiv.appendChild(button);
-}  
+    let venmoUrl = 'https://venmo.com/' + venmoUsername + '?txn=pay';
+    
+    let totalAmount = 0;
+    for (let i = 0; i < payments.length; i++) {
+        totalAmount += payments[i].amount;
+    }
+    
+    venmoUrl += '&amount=' + totalAmount;
+    
+    console.log(venmoUrl)
+    
+    return venmoUrl
+//    // Display the Venmo link
+//    const button = document.createElement('a');
+//    button.href = venmoUrl;
+//    button.textContent = 'Pay with Venmo';
+//    button.target = '_blank';
+//    venmoLinkDiv.appendChild(button);
+}
