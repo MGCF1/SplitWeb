@@ -11,8 +11,6 @@ const resultsDiv = document.getElementById('results');
 resultsDiv.innerHTML = `<p>Total: $${total}</p>`;
 if (subTotal) { resultsDiv.innerHTML += `<p>SubTotal: $${subTotal}</p>`; }
 
-window.open("splitMGCF1://")
-
 // Display People with Checkboxes
 const peopleList = document.getElementById('people-list');
 people.forEach(person => {
