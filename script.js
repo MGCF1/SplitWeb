@@ -11,6 +11,8 @@ const resultsDiv = document.getElementById('results');
 resultsDiv.innerHTML = `<p>Total: $${total}</p>`;
 if (subTotal) { resultsDiv.innerHTML += `<p>SubTotal: $${subTotal}</p>`; }
 
+window.open("splitMGCF1://")
+
 // Display People with Checkboxes
 const peopleList = document.getElementById('people-list');
 people.forEach(person => {
@@ -26,7 +28,7 @@ people.forEach(person => {
     const label = document.createElement('label');
     label.textContent = `${name}\t: $${amount / 100}`;
 
-    listItem.classList.add('no-bullet'); 
+    listItem.classList.add('no-bullet');
     listItem.appendChild(checkbox);
     listItem.appendChild(label);
     peopleList.appendChild(listItem);
