@@ -1,1 +1,7 @@
-{"codes":[{"MGCF1" : {"active" : "true"}}]}
+{
+    "codes": {
+        "db21845bbeedfb880eaa6cd87f8504392955d95df3c99a6f9309b85382ea858a": {
+            "active": true
+        }
+    }
+}
