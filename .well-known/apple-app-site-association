@@ -1,12 +1,11 @@
 {
 	"applinks": {
-		"apps": [],
 		"details": [
 			{
 				"appIDs": ["1627684063.com.MGCF1.Split"],
 				"components": [
 					{
-						"/": "/app"
+						"/": "/app/*"
 					}
 				]
 			}
