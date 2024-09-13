@@ -1,12 +1,14 @@
 {
 	"applinks": {
-		"apps": [ ],
-		"details": [{
-			"appID": "1627684063.com.MGCF1.Split",
-        		"components": [
-				{"/": "*"}
-			],
-			"paths": ["*"]
+		"apps": [],
+		"details": [
+			{
+				"appID": "1627684063.com.MGCF1.Split",
+				"components": [
+					{
+						"/": "*"
+					}
+				]
 			}
 		]
 	}
